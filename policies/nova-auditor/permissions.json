@@ -1,0 +1,45 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadNovaRoles",
+      "Effect": "Allow",
+      "Action": ["iam:GetRole", "iam:GetRolePolicy", "iam:ListRolePolicies", "iam:ListAttachedRolePolicies"],
+      "Resource": [
+        "arn:aws:iam::<ACCOUNT_ID>:role/NovaAppRole",
+        "arn:aws:iam::<ACCOUNT_ID>:role/NovaDeveloperRole",
+        "arn:aws:iam::<ACCOUNT_ID>:role/NovaOperatorRole",
+        "arn:aws:iam::<ACCOUNT_ID>:role/NovaAuditorRole"
+      ]
+    },
+    {
+      "Sid": "ReadBucketConfigurationOnly",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetBucketPolicy",
+        "s3:GetBucketPublicAccessBlock",
+        "s3:GetEncryptionConfiguration",
+        "s3:GetBucketVersioning"
+      ],
+      "Resource": "arn:aws:s3:::<BUCKET>"
+    },
+    {
+      "Sid": "ReadAppLogs",
+      "Effect": "Allow",
+      "Action": ["logs:GetLogEvents", "logs:FilterLogEvents", "logs:DescribeLogStreams"],
+      "Resource": "arn:aws:logs:<REGION>:<ACCOUNT_ID>:log-group:<LOG_GROUP>:*"
+    },
+    {
+      "Sid": "NoResourceLevelDescribeInfrastructure",
+      "Effect": "Allow",
+      "Action": ["ec2:DescribeInstances", "ec2:DescribeSecurityGroups"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "NoResourceLevelReadAlarmsAndMetrics",
+      "Effect": "Allow",
+      "Action": ["cloudwatch:DescribeAlarms", "cloudwatch:GetMetricData", "cloudwatch:ListMetrics"],
+      "Resource": "*"
+    }
+  ]
+}
